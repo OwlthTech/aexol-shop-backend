@@ -4,6 +4,7 @@ import {
 } from "@vendure/email-plugin";
 import path from "path";
 import { getEnvs } from "../../getEnvs";
+import 'dotenv/config';
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, STOREFRONT_URL } =
   getEnvs();
@@ -13,6 +14,8 @@ export const EmailPlugin = Base.init({
   templatePath: path.join(__dirname, "../../../static/email/templates"),
   transport: {
     type: "smtp",
+    secure: true,
+    authMethod: "TLS",
     host: SMTP_HOST,
     port: Number(SMTP_PORT),
     auth: { user: SMTP_USERNAME, pass: SMTP_PASSWORD },

@@ -3,21 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "populate": "ts-node src/populate.ts",
+    "compile-admin-ui": "ts-node src/compile-admin-ui.ts",
     "dev:server": "ts-node ./src/index.ts",
     "dev:worker": "ts-node ./src/index-worker.ts",
     "dev": "concurrently npm:dev:*",
-    "build": "tsc",
+    "build": "rimraf dist && rimraf admin-ui && tsc",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
     "start": "concurrently npm:start:*",
     "migration:generate": "ts-node migration generate",
     "migration:run": "ts-node migration run",
-    "migration:revert": "ts-node migration revert",
-    "stripe": "stripe listen --forward-to localhost:3000/payments/stripe"
+    "migration:revert": "ts-node migration revert"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.478.0",
-    "@aws-sdk/lib-storage": "^3.478.0",
     "@vendure/admin-ui-plugin": "2.1.4",
     "@vendure/asset-server-plugin": "2.1.4",
     "@vendure/core": "2.1.4",
@@ -26,11 +25,14 @@
     "@vendure/payments-plugin": "^2.1.5",
     "@vendure/ui-devkit": "^2.1.5",
     "dotenv": "16.3.1",
-    "pg": "8.11.3",
-    "stripe": "^13.11.0",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-codegen/typescript": "4.0.6",
     "concurrently": "8.2.2",
     "ts-node": "10.9.2"
   }
